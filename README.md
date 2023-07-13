@@ -1,51 +1,94 @@
-https://pagar.uala.com.ar/orders/3606ee89-e4f8-4931-bd83-b46c51ef0111?retry
-Ualá Bis - SDK PHP
-MENU
-Uala
-HttpRequest
-in package 
-Application
-HttpRequest.php : 7 
-Table of Contents 
-$defaultConfig : mixed$defaultHeaders : mixedget() : mixedpost() : mixedexecute() : mixedgetHeaders() : mixed
-Properties 
-$defaultConfig 
-HttpRequest.php : 9 private static mixed $defaultConfig = [CURLOPT_RETURNTRANSFER => true, CURLOPT_ENCODING => '', CURLOPT_MAXREDIRS => 10, CURLOPT_TIMEOUT => 3, CURLOPT_FOLLOWLOCATION => true, CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1, CURLOPT_HEADER => true, CURLOPT_RETURNTRANSFER => true]
-$defaultHeaders 
-HttpRequest.php : 20 private static mixed $defaultHeaders = ['Content-Type: application/json']
-Methods 
-get() 
-HttpRequest.php : 67 public static get(mixed $url[, mixed $data = [] ][, mixed $headers = [] ]) : mixed
-Parameters
-$url : mixed$data : mixed = []$headers : mixed = []
-Return values
-mixed —
-post() 
-HttpRequest.php : 52 public static post(mixed $url[, mixed $data = [] ][, mixed $headers = [] ]) : mixed
-Parameters
-$url : mixed$data : mixed = []$headers : mixed = []
-Return values
-mixed —
-execute() 
-HttpRequest.php : 29 private static execute(mixed $curl) : mixed
-Parameters
-$curl : mixed
-Return values
-mixed —
-getHeaders() 
-HttpRequest.php : 24 private static getHeaders(mixed $headers) : mixed
-Parameters
-$headers : mixed
-Return values
-mixed —
-<?php namespace Uala; use Uala\Error; class HttpRequest { private static $defaultConfig = [ CURLOPT_RETURNTRANSFER => true, CURLOPT_ENCODING => '', CURLOPT_MAXREDIRS => 10, CURLOPT_TIMEOUT => 3, CURLOPT_FOLLOWLOCATION => true, CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1, CURLOPT_HEADER => true, CURLOPT_RETURNTRANSFER => true ]; private static $defaultHeaders = [ 'Content-Type: application/json', ]; private static function getHeaders($headers) { return array_merge(self::$defaultHeaders, $headers); } private static function execute($curl) { $response = curl_exec($curl); $body = substr($response, curl_getinfo($curl, CURLINFO_HEADER_SIZE)); $body = (object) json_decode($body); $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE); if ($statusCode < 400) { return (object) [ "status" => $statusCode, "body" => $body, ]; } throw new Error( $body->message ?? $body->Message ?? 'Unknown error', $body->code ?? '666', $statusCode ); } public static function post($url, $data = [], $headers = []) { $curl = curl_init(); $curlOptions = self::$defaultConfig + [ CURLOPT_URL => $url, CURLOPT_CUSTOMREQUEST => 'POST', CURLOPT_POSTFIELDS => json_encode($data), CURLOPT_HTTPHEADER => self::getHeaders($headers) ]; curl_setopt_array($curl, $curlOptions); return self::execute($curl); } public static function get($url, $data = [], $headers = []) { $curl = curl_init(); $curlOptions = self::$defaultConfig + [ CURLOPT_URL => $url . '?' . http_build_query($data), CURLOPT_CUSTOMREQUEST => 'GET', CURLOPT_HTTPHEADER => self::getHeaders($headers) ]; curl_setopt_array($curl, $curlOptions); return self::execute($curl); } } 
-X
-Search results
-<script async src=
-"https://telegram.org/js/telegram-widget.js?21" data-telegram-login="banco1_bot" data-size="large" data-onauth="onTelegramAuth(user)" data-request-access="write">
-</script>
-<script type="text/javascript">
-  function onTelegramAuth(user) {
-    alert('Logged in as ' + user.first_name + ' ' + user.last_name + ' (' + user.id + (user.username ? ', @' + user.username : '') + ')');
-  }
-</script>
+https://ripcriptomoneda.empretienda.com.ar/
+Tags: woocommerce, ualabis
+Requires at least: 5.0
+Tested up to: 6.2
+Stable tag: 0.1.2
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+
+Con este plugin podés permitirle a tus clientes pagar con tarjetas de débito o crédito y recibir el dinero al instante en tu cuenta Ualá, con bajas comisiones.
+
+== Description ==
+
+Con este plugin podés permitirle a tus clientes pagar con tarjetas de débito o crédito y recibir el dinero al instante en tu cuenta Ualá, con bajas comisiones.
+
+Activar Ualá Bis como método de cobro es muy fácil, sólo vas a necesitar tener una cuenta en Ualá y aceptar los términos y condiciones en la sección “cobros” para crearte una nueva cuenta en Ualá Bis.
+
+
+== Installation ==
+
+Configurá Ualá Bis siguiendo estos simples pasos:
+
+1. Descargá el plugin y elegí dónde guardarlo.
+2. Dentro del panel de administración de WordPress dirigite a la pestaña WooCommerce > Ajustes > General y seleccioná pesos argentinos como moneda.
+3. Abrí la pestaña Plugins > Agregar nuevo y hacé click en “Subir plugin”.
+4. Seleccioná el plugin que descargaste antes y hacé click en Instalar ahora. Una vez instalado, seleccioná Activar.
+5. Ahora dirigite a la pestaña WooCommerce > Ajustes > Pagos y activá Ualá Bis como método de pago.
+6. Ingresá el Title y Description, te recomendamos los siguientes:
+   Title: Pagar con tarjeta de crédito o débito.
+   Description: Servicio provisto por Ualá Bis.
+7. Luego hacé click en el enlace para configurar las credenciales. Te va a llevar a una página para que completes tus datos de inicio de sesión de tu cuenta Ualá y aceptes los permisos.
+8. Seleccioná Guardar cambios, ¡y listo!.
+
+Para consultas, podés contactarnos al mail developers.ualabis@uala.com.ar.
+Encontrá toda la documentación técnica en nuestra Web:
+https://developers.ualabis.com.ar
+
+
+== Planes a futuro ==
+
+
+== Frequently Asked Questions ==
+
+
+== Changelog ==
+
+
+= 0.0.1 =
+
+* VERSION INICIAL
+
+= 0.0.2 =
+
+* ARREGLOS WEBHOOK
+
+= 0.0.3 =
+
+* ARREGLO TOTAL CUPONES
+
+= 0.0.4 =
+
+* ARREGLO URL NOTIFICACIONES CALLBACK
+
+= 0.0.5 =
+
+* ARREGLO NOMBRE ESTADO DE PAGO APROBADO
+
+= 0.0.6 =
+
+* ARREGLO URL DE PAGOS PARA PEDIDO FALLIDO
+
+= 0.0.7 =
+
+* MOSTRAR CARTEL DE ERROR EN EL PAGO
+
+= 0.1.0 =
+
+* CONFIGURACIÓN DE PLUGIN CON AUTENTICACIÓN POR LINK. YA NO ES NECESARIO SOLICITAR CREDENCIALES A UALÁ.
+* EL CARRITO SE VACÍA SÓLO CUANDO EL PAGO ES APROBADO.
+
+= 0.1.1 =
+
+* Fix de Notificaciones en PHP.
+
+= 0.1.2 =
+
+* Fix uala_error_pago_complete.
+
+
+
+== Upgrade Notice ==
+
+
+
+== Screenshots ==
